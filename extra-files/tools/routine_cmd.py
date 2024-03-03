@@ -13,4 +13,4 @@ def gen_dot_config(clone: str, config: str):
         f'cp -f .config {config}'
     ]
     for cmd in commands:
-        subprocess.run(cmd, shell=True)
+        subprocess.run(cmd, shell=False)

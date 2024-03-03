@@ -90,8 +90,7 @@ class CodeSummary:
         os.chdir(self.codedir)
         code_url = subprocess.run(
             'git remote get-url origin',
-            shell=True,
-            capture_output=True,
+            shell=False, capture_output=True,
             text=True).stdout.strip()
 
         code_name_table = {
@@ -109,8 +108,7 @@ class CodeSummary:
 
         code_commit_log = subprocess.run(
             'git log -1 --pretty=format:%cI%n%h%n%D',
-            shell=True,
-            capture_output=True,
+            shell=False, capture_output=True,
             text=True).stdout.strip().split('\n')
         log['code_commit_date'] = datetime.fromisoformat(
             code_commit_log[0]).astimezone(ZoneInfo('Asia/Shanghai')).isoformat()
@@ -130,8 +128,7 @@ class CodeSummary:
         if not log['code_branch']:
             tag_belong_to = subprocess.run(
                 'git branch --contains HEAD',
-                shell=True,
-                capture_output=True,
+                shell=False, capture_output=True,
                 text=True).stdout.strip().split('\n')
             for tb in tag_belong_to:
                 if not tb.startswith('* (HEAD detached'):
