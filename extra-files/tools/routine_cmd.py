@@ -1,4 +1,5 @@
 import subprocess
+from security import safe_command
 
 
 def gen_dot_config(clone: str, config: str):
@@ -13,4 +14,4 @@ def gen_dot_config(clone: str, config: str):
         f'cp -f .config {config}'
     ]
     for cmd in commands:
-        subprocess.run(cmd, shell=True)
+        safe_command.run(subprocess.run, cmd, shell=True)

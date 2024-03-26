@@ -5,6 +5,7 @@ import subprocess
 from datetime import datetime
 from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
+from security import safe_command
 
 
 class CodeSummary:
@@ -88,8 +89,7 @@ class CodeSummary:
 
         prev_path = os.getcwd()
         os.chdir(self.codedir)
-        code_url = subprocess.run(
-            'git remote get-url origin',
+        code_url = safe_command.run(subprocess.run, 'git remote get-url origin',
             shell=True,
             capture_output=True,
             text=True).stdout.strip()
@@ -107,8 +107,7 @@ class CodeSummary:
             else:
                 log['code_from'] = code_
 
-        code_commit_log = subprocess.run(
-            'git log -1 --pretty=format:%cI%n%h%n%D',
+        code_commit_log = safe_command.run(subprocess.run, 'git log -1 --pretty=format:%cI%n%h%n%D',
             shell=True,
             capture_output=True,
             text=True).stdout.strip().split('\n')
@@ -128,8 +127,7 @@ class CodeSummary:
                 log['code_branch'].append(r)
 
         if not log['code_branch']:
-            tag_belong_to = subprocess.run(
-                'git branch --contains HEAD',
+            tag_belong_to = safe_command.run(subprocess.run, 'git branch --contains HEAD',
                 shell=True,
                 capture_output=True,
                 text=True).stdout.strip().split('\n')
