@@ -1,6 +1,7 @@
 """Text processing"""
 import re
 import shutil
+from security import safe_requests
 
 
 def mlength(iterable) -> int:
@@ -116,9 +117,8 @@ def modify_config_header(config, header, new_file=None):
 
 
 def check_device_support_single(url, define_str):
-    import requests
 
-    r = requests.get(url, timeout=3)
+    r = safe_requests.get(url, timeout=3)
     if define_str in r.text:
         return True
     elif url.endswith('.mk'):
