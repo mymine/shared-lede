@@ -70,7 +70,7 @@ def produce_conf(data: dict, prefix: str):
         if not re.match(r'package(/|$)', app_path):
             app_path = 'package/_supply_packages'
         dl_app_text = (
-            f'\n# download app codes\n'
+            '\n# download app codes\n'
             f'mkdir -p {app_path} && cd {app_path}\n'
             f'{app_commands}')
 
